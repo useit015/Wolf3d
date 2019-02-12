@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 17:42:48 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/11 22:23:39 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/12 21:32:51 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,12 @@ int		ft_wolf_init(t_wolf *f, char *file)
 
 void	ft_wolf_draw(t_wolf *f)
 {
-	int		i;
 	int		j;
 	t_point	p;
-	int		celling;
+	int		ceilling;
 	int		floor;
 	int		hit_wall;
 
-	t_rect rect = {10, 10, 50, 50};
 	j = -1;
 	while (++j < SCR_WIDTH)
 	{
@@ -64,19 +62,17 @@ void	ft_wolf_draw(t_wolf *f)
 					hit_wall = 1;
 			}
 		}
-		celling = (double) SCR_HEIGHT / 2.0 - SCR_HEIGHT / f->dist;
-		floor = SCR_HEIGHT - celling;
+		ceilling = (double) SCR_HEIGHT / 2.0 - SCR_HEIGHT / f->dist;
+		floor = SCR_HEIGHT - ceilling;
 		for (int y = 0; y < SCR_HEIGHT; y++)
 		{
-			if (y < ceiling)
-				w->pixels[y * SCR_WIDTH + x] = 0xBADA55;
-			else if (y >= ceiling && y <= floor)
-				w->pixels[y * SCR_WIDTH + x] = 0xFFFF00;
+			if (y < ceilling)
+				f->pixels[y * SCR_WIDTH + j] = 0xBADA55;
+			else if (y >= ceilling && y <= floor)
+				f->pixels[y * SCR_WIDTH + j] = 0xFFFF00;
 			else
-				w->pixels[y * SCR_WIDTH + x] = 0x000022;
+				f->pixels[y * SCR_WIDTH + j] = 0x000022;
 		}
-
-		ft_putnbr(f->map.tab[i][j]);
 	}
 	ft_update_renderer(f->ptr, f->pixels);
 }
