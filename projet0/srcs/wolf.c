@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 17:42:48 by ebatchas          #+#    #+#             */
-/*   Updated: 2018/12/28 19:03:20 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/11 22:23:39 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,40 +42,42 @@ void	ft_wolf_draw(t_wolf *f)
 
 	t_rect rect = {10, 10, 50, 50};
 	j = -1;
-		while (++j < SCR_WIDTH)
+	while (++j < SCR_WIDTH)
+	{
+		f->r_angle = (f->player.angle - f->fov / 2.0) + ((double) j / (double)SCR_WIDTH * f->fov);
+		f->dist = .0;
+		f->p_ray = ft_vector(sin(f->r_angle), cos(f->r_angle));
+		hit_wall = 0;
+		while (!hit_wall && f->dist < f->dist_max)
 		{
-			f->r_angle = (f->player.angle - f->fov / 2.0) + ((double) j / (double)SCR_WIDTH * f->fov);
-			f->dist = .0;
-			f->p_ray = ft_vector(sin(f->r_angle), cos(f->r_angle));
-			hit_wall = 0;
-			while (!hit_wall && f->dist < f->dist_max)
+			f->dist += 0.1;
+			p.x = (int) (f->player.x + f->p_ray.x * f->dist);
+			p.y = (int) (f->player.y + f->p_ray.y * f->dist);
+			if (p.x < 0 || p.x >= f->map.w || p.y < 0 || p.y >= f->map.h)
 			{
-				f->dist += 0.1;
-				p.x = (int) (f->player.x + f->p_ray.x * f->dist);
-				p.y = (int) (f->player.y + f->p_ray.y * f->dist);
-				if (p.x < 0 || p.x >= f->map.w || p.y < 0 || p.y >= f->map.h)
-				{
-					hit_wall = 1;
-					f->dist = f->dist_max;
-				}
-				else
-				{
-					if (f->map.tab[p.y][p.x] == 1)
-						hit_wall = 1;
-				}
+				hit_wall = 1;
+				f->dist = f->dist_max;
 			}
-			celling = (double) SCR_HEIGHT / 2.0 - SCR_HEIGHT / f->dist;
-			floor = SCR_HEIGHT - celling;
-			rect.x = j * rect.w + j * 2.0;
-			rect.y = i * rect.h + i * 2.0;
-			if (rect.x <= celling)
-				ft_sdl_draw_rect(f->pixels, rect, 0xFF00FF);
-			else if (rect.x > celling && i < floor)
-				ft_sdl_draw_rect(f->pixels, rect, 0xFF0000);
 			else
-				ft_sdl_draw_rect(f->pixels, rect, 0xFF00FF);
-			ft_putnbr(f->map.tab[i][j]);
+			{
+				if (f->map.tab[p.y][p.x] == 1)
+					hit_wall = 1;
+			}
 		}
+		celling = (double) SCR_HEIGHT / 2.0 - SCR_HEIGHT / f->dist;
+		floor = SCR_HEIGHT - celling;
+		for (int y = 0; y < SCR_HEIGHT; y++)
+		{
+			if (y < ceiling)
+				w->pixels[y * SCR_WIDTH + x] = 0xBADA55;
+			else if (y >= ceiling && y <= floor)
+				w->pixels[y * SCR_WIDTH + x] = 0xFFFF00;
+			else
+				w->pixels[y * SCR_WIDTH + x] = 0x000022;
+		}
+
+		ft_putnbr(f->map.tab[i][j]);
+	}
 	ft_update_renderer(f->ptr, f->pixels);
 }
 

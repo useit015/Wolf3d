@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:45:47 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/07 21:45:57 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/09 13:28:24 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void		ft_fill_map(t_map *m, char *line, int y)
 	while (tab[++x])
 	{
 		m->tab[y][x] = ft_atoi(tab[x]);
+		if (m->tab[y][x] < 0 || m->tab[y][x] > 8)
+		   ft_error();	
+		if ((y == 0 || x == 0 || x == m->w - 1) && m->tab[y][x] == 0)
+		   ft_error();	
 	}
 	if (!m->w)
 		m->w = x;
@@ -51,6 +55,11 @@ void		ft_read_file(t_map *m, char *file_name)
 			ft_fill_map(m, line, y++);
 		m->h = y;
 		if (!m->w || !m->h)
+			ft_error();
+		y = -1;
+		while (m->tab[m->h - 1][++y] > 0)
+			;
+		if (m->w != y)
 			ft_error();
 	}
 	else

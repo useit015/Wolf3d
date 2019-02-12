@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 05:35:39 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/07 21:02:58 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/12 14:16:55 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		ft_wolf_sprite(t_wolf *w)
 				while (--j > w->sp_start.y -1)
 				{
 					d = t + (j << 8);
-					w->tex_y = ((d * TILE_HEIGHT / w->sprite_size.y) >> 7);
+					w->tex_y = ((d * TILE_HEIGHT / w->sprite_size.y) >> 8);
 					w->color = w->tex2[w->sprite[w->sprite_order[i]].texture].pixels[TILE_WIDTH * w->tex_y + w->tex_x];
 					if ((w->color & 0x00FFFFFF)  != 0)
 						w->pixels[j * SCR_WIDTH + k] = w->color;

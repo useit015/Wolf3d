@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:45:12 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/08 19:47:36 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/09 13:42:14 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_wolf_type2(t_wolf *w)
 	while (++p.y <= w->pd.y)
 	{
 		w->d = (p.y << 8) - (w->h << 7) + (w->line_height << 7);
+		if (w->line_height == 0.0)
+			write(1, "You now know\n", 13);
 		w->tile_p.y = ((w->d * T_H) / w->line_height) >> 8;
 		if (w->type == 1)
 			w->color = w->tex1[w->tile_num].pixels[w->tile_p.y * T_W +

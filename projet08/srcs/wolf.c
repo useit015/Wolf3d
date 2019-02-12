@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/27 17:42:48 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/01/31 12:12:08 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/12 14:16:05 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void		ft_wolf_draw(t_wolf *w)
 		ft_wolf_dda(w);
 		ft_wolf_end(w);
 	}
+	ft_wolf_sprite(w);
 	if (w->help)
 		ft_draw_map(w);
 	w->old_time = w->curr_time;

@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 13:24:23 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/01/31 10:11:41 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/12 14:16:06 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void		ft_wolf_end(t_wolf *w)
 	else
 		ft_wolf_type2(w);
 	ft_wolf_cell_floor(w);
-	ft_wolf_sprite(w);
 }
 
 void		ft_wolf_cell_floorh(t_wolf *w)

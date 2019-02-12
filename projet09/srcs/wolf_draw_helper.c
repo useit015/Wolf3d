@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/05 13:24:23 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/01/31 13:38:41 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/12 14:13:02 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ void		ft_wolf_end(t_wolf *w)
 		ft_wolf_type1(w);
 	else
 		ft_wolf_type2(w);
-	w->z_buffer[w->x] = w->per_wall_dist;
-	ft_wolf_sprite(w);
 	ft_wolf_cell_floor(w);
+	w->z_buffer[w->x] = w->per_wall_dist;
 }
 
 void		ft_wolf_cell_floorh(t_wolf *w)
