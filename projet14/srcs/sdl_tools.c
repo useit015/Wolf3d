@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:43:50 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/08 20:06:04 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/14 22:03:29 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ Uint32		*ft_load_pixels(SDL_Renderer *renderer, char *file_name)
 	while ((++y < T_H) && (x = -1))
 		while (++x < T_W)
 			pixels[y * T_W + x] = ft_get_pixels(s, x, y);
-	SDL_UnlockSurface(s->pixels);
+	SDL_UnlockSurface(s);
 	SDL_FreeSurface(s);
 	s = NULL;
 	return (pixels);

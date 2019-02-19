@@ -6,11 +6,21 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 14:01:57 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/12 19:24:55 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:20:32 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/wolf.h"
+
+int		ft_compdouble(const void *a, const void *b)
+{
+	double  *pa;
+	double *pb;
+
+	pa = (double *)a;
+	pb = (double *)b;
+	return ((*pa) - (*pb));
+}
 
 void		ft_sprite_sort(int *order, float *dist, int n)
 {
@@ -104,18 +114,18 @@ void		ft_wolf_sprite2(t_wolf *w, int i)
 			{
 				d = w->temp + (j << 8);
 				w->tex_y = ((d * T_H / w->sprite_size.y) >> 8);
-				w->color = w->tex2[w->sprites[w->sprite_order[i]].texture].pixels
+				w->color = w->tex2[ft_sprites(w->sprites, w->sprite_order[i])->texture].pixels
 					[T_W * w->tex_y + w->tex_x];
 				if ((w->color & 0x00FFFFFF) != 0)
 					w->pixels[j * w->w + k] = w->color;
 			}
 		}
-		else if (w->sprite_trans.y >= w->z_buffer[k])
-			if (w->sprites[i].remove)
-				ft_clear_sprites(&w->sprites, i);
+		/*else if (w->sprite_trans.y >= w->z_buffer[k])
+		  if (ft_sprites(w->sprites, i)->remove)
+		  ft_clear_sprites(&w->sprites);*/
 	}
-	w->sprites[i].x += w->sprites[i].vx;
-	w->sprites[i].y += w->sprites[i].vy;
+	ft_sprites(w->sprites, i)->x += ft_sprites(w->sprites, i)->vx;
+	ft_sprites(w->sprites, i)->y += ft_sprites(w->sprites, i)->vy;
 }
 
 void		ft_wolf_sprite(t_wolf *w)
@@ -123,18 +133,20 @@ void		ft_wolf_sprite(t_wolf *w)
 	int		i;
 
 	i = -1;
-	while (++i < w->nb_sprites)
+	while (++i < w->nb_sprites || !(i = -1))
 	{
 		w->sprite_order[i] = i;
-		w->sprite_dist[i] = (w->player.x - w->sprites[i].x) * (w->player.x -
-				w->sprites[i].x) + (w->player.y - w->sprites[i].y) * (w->player.y
-					- w->sprites[i].y);
+		w->sprite_dist[i] = (w->player.x - ft_sprites(w->sprites, i)->x) * (w->player.x -
+				ft_sprites(w->sprites, i)->x) + (w->player.y - ft_sprites(w->sprites, i)->y) * (w->player.y
+				- ft_sprites(w->sprites, i)->y);
 	}
-	ft_sprite_sort(w->sprite_order, w->sprite_dist, w->nb_sprites);
-	while (--i >= 0)
+	qsort(&(w->sprite_dist[0]), w->nb_sprites, sizeof(double), ft_compdouble);
+	//ft_sprite_sort(w->sprite_order, w->sprite_dist, w->nb_sprites);
+	ft_print_sprites(w->sprites);
+	while (++i < w->nb_sprites)
 	{
-		w->sprite_pos.x = w->sprites[w->sprite_order[i]].x - w->player.x;
-		w->sprite_pos.y = w->sprites[w->sprite_order[i]].y - w->player.y;
+		w->sprite_pos.x = ft_sprites(w->sprites, w->sprite_order[i])->x - w->player.x;
+		w->sprite_pos.y = ft_sprites(w->sprites, w->sprite_order[i])->y - w->player.y;
 		w->inv_det = 1.0 / (w->cam_plane.x * w->dir.y - w->dir.x *
 				w->cam_plane.y);
 		w->sprite_trans.x = w->inv_det * (w->dir.y * w->sprite_pos.x -

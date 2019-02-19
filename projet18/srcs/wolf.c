@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 12:54:50 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/12 19:08:52 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:19:44 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ void	ft_init_variables2(t_wolf *w)
 	ft_push_back_sprites(&w->sprites, ft_create_sprites(ft_vector(9.5, 15.5), ft_vector(0.0, 0.0), 8));
 	ft_push_back_sprites(&w->sprites, ft_create_sprites(ft_vector(10.0, 15.1), ft_vector(0.0, 0.0), 8));
 	ft_push_back_sprites(&w->sprites, ft_create_sprites(ft_vector(10.5, 15.8), ft_vector(0.0, 0.0), 10));
+	ft_push_back_sprites(&w->sprites, ft_create_sprites(ft_vector(10.5, 14.8), ft_vector(0.0, 0.0), 10));
 	w->sprite_dist = (float *)malloc(256 * sizeof(float));
 	w->sprite_order = (int *)malloc(256 * sizeof(int));
-	w->nb_sprites =  1 + ft_length_sprites(w->sprites);
+	w->nb_sprites =  ft_length_sprites(w->sprites);
 	printf("Length1 is : %d\n", w->nb_sprites);
 }
 

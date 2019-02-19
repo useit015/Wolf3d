@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 14:01:57 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/09 14:02:00 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/19 05:41:20 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void		ft_wolf_sprite(t_wolf *w)
 	int		i;
 
 	i = -1;
-	while (++i < NB_SPRITES)
+	while (++i < NB_SPRITES || !(i = -1))
 	{
 		w->sprite_order[i] = i;
 		w->sprite_dist[i] = (w->player.x - w->sprite[i].x) * (w->player.x -
@@ -126,7 +126,7 @@ void		ft_wolf_sprite(t_wolf *w)
 					- w->sprite[i].y);
 	}
 	ft_sprite_sort(w->sprite_order, w->sprite_dist, NB_SPRITES);
-	while (--i >= 0)
+	while (++i < NB_SPRITES)
 	{
 		w->sprite_pos.x = w->sprite[w->sprite_order[i]].x - w->player.x;
 		w->sprite_pos.y = w->sprite[w->sprite_order[i]].y - w->player.y;

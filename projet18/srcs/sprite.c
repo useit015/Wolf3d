@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 16:37:59 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/12 19:22:05 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:22:06 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_sprite	*ft_create_sprites(t_vect2d pos, t_vect2d v, int texture)
 
 	if ((new = (t_sprite *)malloc(sizeof(*new))))
 	{
-		new->x = pos.x;
-		new->y = pos.y;
+		new->x = pos.x + v.x;
+		new->y = pos.y + v.y;
 		new->vx = v.x;
 		new->vy = v.y;
 		new->remove = 0;
@@ -95,22 +95,27 @@ void		ft_free_sprites(t_sprite **s)
 	s = NULL;
 }
 
-void		ft_clear_sprites(t_sprite **s, int indice)
+t_sprite	*ft_sprites(t_sprite *s, int indice)
+{
+	while (s && (--indice >= 0))
+		s = s->next;
+	return (s);
+}
+
+void		ft_clear_sprites(t_sprite **s)
 {
 	t_sprite	*p;
 	t_sprite	*q;
-	int			i;
 
 	p = *s;
-	i = -1;
 	if (p)
 	{
-		while (p && ++i < indice)
+		while (p && !p->remove)
 		{
 			q = p;
 			p = p->next;
 		}
-		if (i == indice)
+		if (p->remove)
 		{
 			if (q)
 			{
@@ -120,6 +125,15 @@ void		ft_clear_sprites(t_sprite **s, int indice)
 			if (!*s)
 				s = NULL;
 		}
+	}
+}
+
+void		ft_print_sprites(t_sprite *s)
+{
+	for (int i = 0; s; i++)
+	{
+		printf("SPRITE : %d x : %.2f y : %.2f removable ? : %d\n", i, s->x, s->y, s->remove);
+		s = s->next;
 	}
 }
 

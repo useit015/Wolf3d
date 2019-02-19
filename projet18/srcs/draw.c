@@ -6,7 +6,7 @@
 /*   By: ebatchas <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 22:21:00 by ebatchas          #+#    #+#             */
-/*   Updated: 2019/02/12 19:21:41 by ebatchas         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:21:35 by ebatchas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,9 @@ void		ft_wolf_keyh(t_wolf *w, t_input *in)
 	if (in->keys[SDL_SCANCODE_SPACE])
 	{
 		t_sprite	*new;
-		t_vect2d	v = { 0.01f,  0.01f};
+		t_vect2d	v = { w->dir.x * 0.5f,  0.5 * w->dir.y};
 		if (w->nb_sprites < 256 && (new = ft_create_sprites(ft_vector(w->player.x, w->player.y), v, 8)))
 		{
-			new->remove = 1;
 			ft_push_back_sprites(&w->sprites, new);
 			w->nb_sprites++;
 			printf("\n NB == %d|", w->nb_sprites);
